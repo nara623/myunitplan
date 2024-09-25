@@ -40,9 +40,6 @@
             display: flex;
             flex-direction: column;
         }
-        input[type="radio"], input[type="checkbox"] {
-            margin-right: 10px;
-        }
         button {
             padding: 10px;
             margin-top: 10px;
@@ -55,6 +52,14 @@
         }
         button:hover {
             background-color: #45a049;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .option input {
+            margin-right: 10px;
         }
     </style>
 </head>
@@ -112,22 +117,23 @@
             if (questions[currentQuestion].multiple) {
                 questions[currentQuestion].options.forEach(option => {
                     inputArea.innerHTML += `
-                        <label>
+                        <div class="option">
                             <input type="checkbox" name="answer" value="${option}"> ${option}
-                        </label><br>
+                        </div>
                     `;
                 });
             } else {
                 questions[currentQuestion].options.forEach(option => {
                     inputArea.innerHTML += `
-                        <label>
+                        <div class="option">
                             <input type="radio" name="answer" value="${option}"> ${option}
-                        </label><br>
+                        </div>
                     `;
                 });
             }
             
             inputArea.innerHTML += '<button onclick="submitAnswer()">다음</button>';
+            inputArea.scrollIntoView({ behavior: 'smooth' });
         }
 
         function submitAnswer() {
@@ -180,4 +186,5 @@
     </script>
 </body>
 </html>
+
 
