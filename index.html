@@ -28,12 +28,18 @@
         }
         .message {
             margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
         }
         .bot {
-            color: #4CAF50;
+            background-color: #e1f5fe;
+            color: #333;
+            align-self: flex-start;
         }
         .user {
-            color: #2196F3;
+            background-color: #bbdefb;
+            color: #333;
+            align-self: flex-end;
             text-align: right;
         }
         #inputArea {
@@ -111,9 +117,11 @@
             const chatbox = document.getElementById('chatbox');
             const inputArea = document.getElementById('inputArea');
             
+            // 챗봇 질문 추가
             chatbox.innerHTML += `<div class="message bot"><strong>챗봇:</strong> ${questions[currentQuestion].question}</div>`;
             inputArea.innerHTML = '';
 
+            // 옵션 추가
             if (questions[currentQuestion].multiple) {
                 questions[currentQuestion].options.forEach(option => {
                     inputArea.innerHTML += `
@@ -186,5 +194,3 @@
     </script>
 </body>
 </html>
-
-
