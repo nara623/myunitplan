@@ -10,27 +10,48 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
         }
         #chatbox {
             border: 1px solid #ccc;
             padding: 20px;
             height: 400px;
             overflow-y: auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
-        #userInput {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
+        .message {
+            margin: 10px 0;
+        }
+        .bot {
+            color: #4CAF50;
+        }
+        .user {
+            color: #2196F3;
+            text-align: right;
+        }
+        #inputArea {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
         }
         button {
-            display: block;
-            width: 100%;
             padding: 10px;
             margin-top: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #45a049;
@@ -85,12 +106,11 @@
             const chatbox = document.getElementById('chatbox');
             const inputArea = document.getElementById('inputArea');
             
-            chatbox.innerHTML += `<p><strong>챗봇:</strong> ${questions[currentQuestion].question}</p>`;
-            
+            chatbox.innerHTML += `<div class="message bot"><strong>챗봇:</strong> ${questions[currentQuestion].question}</div>`;
             inputArea.innerHTML = '';
-            
+
             if (questions[currentQuestion].multiple) {
-                questions[currentQuestion].options.forEach((option, index) => {
+                questions[currentQuestion].options.forEach(option => {
                     inputArea.innerHTML += `
                         <label>
                             <input type="checkbox" name="answer" value="${option}"> ${option}
@@ -98,7 +118,7 @@
                     `;
                 });
             } else {
-                questions[currentQuestion].options.forEach((option, index) => {
+                questions[currentQuestion].options.forEach(option => {
                     inputArea.innerHTML += `
                         <label>
                             <input type="radio" name="answer" value="${option}"> ${option}
@@ -129,7 +149,7 @@
             answers.push(answer);
             
             const chatbox = document.getElementById('chatbox');
-            chatbox.innerHTML += `<p><strong>사용자:</strong> ${answer.join(', ')}</p>`;
+            chatbox.innerHTML += `<div class="message user"><strong>사용자:</strong> ${answer.join(', ')}</div>`;
             
             currentQuestion++;
             
@@ -138,22 +158,26 @@
             } else {
                 showResults();
             }
+
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
         }
 
         function showResults() {
             const chatbox = document.getElementById('chatbox');
             const inputArea = document.getElementById('inputArea');
             
-            chatbox.innerHTML += '<p><strong>챗봇:</strong> 주거 선호도 조사가 완료되었습니다. 결과를 확인해주세요:</p>';
+            chatbox.innerHTML += '<div class="message bot"><strong>챗봇:</strong> 주거 선호도 조사가 완료되었습니다. 결과를 확인해주세요:</div>';
             
             questions.forEach((q, index) => {
-                chatbox.innerHTML += `<p>${q.question}<br>답변: ${answers[index].join(', ')}</p>`;
+                chatbox.innerHTML += `<div class="message"><strong>${q.question}</strong><br>답변: ${answers[index].join(', ')}</div>`;
             });
             
             inputArea.innerHTML = '';
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
         }
 
         displayQuestion();
     </script>
 </body>
 </html>
+
